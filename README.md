@@ -1,6 +1,6 @@
 # The Lighthouse 🗼
 
-A multi-tenant billing and account-monitoring dashboard built with the MERN stack. It features dynamic tenant branding, subscriber invoice management, and real-time Socket.io notifications for customer service agents. 
+A multi-tenant billing and account-monitoring dashboard built with the MERN stack. It features dynamic tenant branding, subscriber invoice management, and real-time Socket.io notifications for customer service agents.
 
 The application is designed to act as a self-service portal that shifts investigative power directly to the user, allowing them to monitor account health, spot unauthorized charges, and secure their data, while keeping billing agents in the loop via real-time alerts.
 
@@ -74,7 +74,7 @@ npm run dev
 npm start
 ```
 
-## Project Tree Directory
+## 🌳 Project Tree Directory
 ```bash
 .
   |-client
