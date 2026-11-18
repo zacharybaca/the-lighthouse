@@ -74,4 +74,94 @@ npm run dev
 npm start
 ```
 
+## Project Tree Directory
+```bash
+.
+  |-client
+  |  |-eslint.config.js
+  |  |-index.html
+  |  |-package-lock.json
+  |  |-package.json
+  |  |-public
+  |  |  |-favicon.svg
+  |  |  |-icons.svg
+  |  |-src
+  |  |  |-App.css
+  |  |  |-App.jsx
+  |  |  |-assets
+  |  |  |  |-the-lighthouse-logo.png
+  |  |  |-components
+  |  |  |  |-AccountAtAGlance
+  |  |  |  |  |-account-at-a-glance.css
+  |  |  |  |  |-AccountAtAGlance.jsx
+  |  |  |  |-AgentDashboard
+  |  |  |  |  |-agent-dashboard.css
+  |  |  |  |  |-AgentDashboard.jsx
+  |  |  |  |-Auth
+  |  |  |  |  |-Login.jsx
+  |  |  |  |-HomePage
+  |  |  |  |  |-home-page.css
+  |  |  |  |  |-HomePage.jsx
+  |  |  |  |-ManagerDashboard
+  |  |  |  |  |-manager-dashboard.css
+  |  |  |  |  |-ManagerDashboard.jsx
+  |  |  |  |-OnboardingWizard
+  |  |  |  |  |-onboarding-wizard.css
+  |  |  |  |  |-OnboardingWizard.jsx
+  |  |  |  |-Routing
+  |  |  |  |  |-RoleRoute.jsx
+  |  |  |  |-TransactionMonitor
+  |  |  |  |  |-transaction-monitor.css
+  |  |  |  |  |-TransactionMonitor.jsx
+  |  |  |-context
+  |  |  |  |-AuthContext.jsx
+  |  |  |-hooks
+  |  |  |  |-useSocket.js
+  |  |  |-index.css
+  |  |  |-layouts
+  |  |  |  |-DashboardLayout.jsx
+  |  |  |-main.jsx
+  |  |  |-services
+  |  |  |  |-api.js
+  |  |  |-styles
+  |  |  |  |-variables.css
+  |  |-vite.config.js
+  |-README.md
+  |-server
+  |  |-.env
+  |  |-config
+  |  |  |-db.js
+  |  |-controllers
+  |  |  |-authController.js
+  |  |  |-invoiceController.js
+  |  |  |-notificationController.js
+  |  |  |-orgController.js
+  |  |  |-planController.js
+  |  |  |-staffController.js
+  |  |  |-subscriberController.js
+  |  |  |-subscriptionController.js
+  |  |-middleware
+  |  |  |-authMiddleware.js
+  |  |-models
+  |  |  |-Invoice.js
+  |  |  |-LoginHistory.js
+  |  |  |-Notification.js
+  |  |  |-Organization.js
+  |  |  |-Plan.js
+  |  |  |-Staff.js
+  |  |  |-Subscriber.js
+  |  |-package-lock.json
+  |  |-package.json
+  |  |-routes
+  |  |  |-authRoutes.js
+  |  |  |-invoiceRoutes.js
+  |  |  |-notificationRoutes.js
+  |  |  |-orgRoutes.js
+  |  |  |-planRoutes.js
+  |  |  |-staffRoutes.js
+  |  |  |-subscriberRoutes.js
+  |  |  |-subscriptionRoutes.js
+  |  |-server.js
+```
+
 The React app will launch at `http://localhost:3000` and the Express server will listen on `http://localhost:5000`.
