@@ -2,15 +2,16 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
-import Organization from './models/Organization.js';
-import Plan from './models/Plan.js';
-import Staff from './models/Staff.js';
-import Subscriber from './models/Subscriber.js';
-import Invoice from './models/Invoice.js';
-import Notification from './models/Notification.js';
-import LoginHistory from './models/LoginHistory.js';
+import Organization from '../models/Organization.js';
+import Plan from '../models/Plan.js';
+import Staff from '../models/Staff.js';
+import Subscriber from '../models/Subscriber.js';
+import Invoice from '../models/Invoice.js';
+import Notification from '../models/Notification.js';
+import LoginHistory from '../models/LoginHistory.js';
 
-dotenv.config();
+// Resolves server/.env reliably no matter which folder you run the script from
+dotenv.config({ path: new URL('../.env', import.meta.url) });
 
 const seedDatabase = async () => {
   try {
