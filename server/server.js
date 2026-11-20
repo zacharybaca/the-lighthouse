@@ -7,7 +7,7 @@ import { Server } from 'socket.io';
 import connectDB from './config/db.js';
 
 // Uncomment each route as you build it out:
-// import authRoutes from './routes/authRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 // import orgRoutes from './routes/orgRoutes.js';
 // import planRoutes from './routes/planRoutes.js';
 // import staffRoutes from './routes/staffRoutes.js';
@@ -63,7 +63,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // 4. API Routes (uncomment as you implement each module)
-// app.use('/api/auth', authRoutes);
+app.use('/api/auth', authRoutes);
 // app.use('/api/orgs', orgRoutes);
 // app.use('/api/plans', planRoutes);
 // app.use('/api/staff', staffRoutes);
