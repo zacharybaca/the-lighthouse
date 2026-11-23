@@ -10,7 +10,7 @@
  * - role:         String, enum: ['Agent', 'Manager'], default: 'Agent', required
  *
  * Schema Options:
- * - { timestamps: true }
+ * - { timestamps: true, collection: 'staff' }
  */
 
 import mongoose from 'mongoose';
@@ -26,6 +26,7 @@ const staffSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
+      unique: true,
       lowercase: true,
       trim: true,
     },
@@ -52,7 +53,5 @@ const staffSchema = new mongoose.Schema(
   },
   { timestamps: true, collection: 'staff' }
 );
-
-staffSchema.index({ orgId: 1, email: 1 }, { unique: true });
 
 export default mongoose.model('Staff', staffSchema);

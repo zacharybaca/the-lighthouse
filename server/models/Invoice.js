@@ -23,7 +23,6 @@ const invoiceSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Organization',
       required: true,
-      index: true,
     },
     subscriberId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -58,7 +57,7 @@ const invoiceSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Fast lookup for a subscriber's billing history, newest first
+// Fast lookup for a subscriber's billing history, newest first (also covers orgId lookups)
 invoiceSchema.index({ orgId: 1, subscriberId: 1, issueDate: -1 });
 
 export default mongoose.model('Invoice', invoiceSchema);

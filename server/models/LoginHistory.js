@@ -10,7 +10,7 @@
  * - timestamp: Date, default: Date.now
  *
  * Schema Options:
- * - { timestamps: false } (timestamp field handles login time explicitly)
+ * - { timestamps: false, collection: 'login_history' }
  */
 
 import mongoose from 'mongoose';
@@ -21,7 +21,6 @@ const loginHistorySchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Organization',
       required: true,
-      index: true,
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -48,7 +47,7 @@ const loginHistorySchema = new mongoose.Schema(
   { timestamps: false, collection: 'login_history' }
 );
 
-// Fast lookup for recent security audits per organization
+// Fast lookup for recent security audits per organization (also covers orgId lookups)
 loginHistorySchema.index({ orgId: 1, timestamp: -1 });
 
 export default mongoose.model('LoginHistory', loginHistorySchema);

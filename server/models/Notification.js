@@ -20,7 +20,6 @@ const notificationSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Organization',
       required: true,
-      index: true,
     },
     subscriberId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -44,7 +43,7 @@ const notificationSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Fast lookup for unread alerts in the Agent Dashboard
+// Fast lookup for unread alerts in the Agent Dashboard (also covers orgId lookups)
 notificationSchema.index({ orgId: 1, isRead: 1, createdAt: -1 });
 
 export default mongoose.model('Notification', notificationSchema);

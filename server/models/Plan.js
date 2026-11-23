@@ -21,7 +21,6 @@ const planSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Organization',
       required: true,
-      index: true,
     },
     planName: {
       type: String,
@@ -51,7 +50,7 @@ const planSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Fast lookup for an org's plans sorted by tier
+// Fast lookup for an org's plans sorted by tier (also covers orgId lookups)
 planSchema.index({ orgId: 1, speedTier: 1 });
 
 export default mongoose.model('Plan', planSchema);

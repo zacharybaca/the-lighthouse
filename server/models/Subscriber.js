@@ -10,7 +10,7 @@
  * - lastName:       String, required, trim
  * - accountBalance: Number, default: 0
  * - supportPin:     Object (optional embedded subdoc for 6-digit Support PIN)
- *     - hash:       String (hashed 6-digit PIN)
+ *     - hash:       String (hashed 6-digit PIN, excluded from queries by default)
  *     - expiresAt:  Date (e.g., 10 minutes from generation)
  *
  * Schema Options:
@@ -35,6 +35,7 @@ const subscriberSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
+      unique: true,
       lowercase: true,
       trim: true,
     },
@@ -57,13 +58,11 @@ const subscriberSchema = new mongoose.Schema(
       default: 0,
     },
     supportPin: {
-      hash: { type: String },
+      hash: { type: String, select: false },
       expiresAt: { type: Date },
     },
   },
   { timestamps: true }
 );
-
-subscriberSchema.index({ orgId: 1, email: 1 }, { unique: true });
 
 export default mongoose.model('Subscriber', subscriberSchema);

@@ -10,6 +10,11 @@ export const protect = (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+    // Guard against malformed tokens missing required tenant or identity claims
+    if (!decoded.id || !decoded.orgId || !decoded.role || !decoded.userType) {
+      return res.status(401).json({ message: 'Not authorized — malformed session token.' });
+    }
+
     // Always source orgId and role from the verified JWT payload
     req.user = {
       id: decoded.id,

@@ -5,10 +5,17 @@ import Subscriber from '../models/Subscriber.js';
 import Organization from '../models/Organization.js';
 import LoginHistory from '../models/LoginHistory.js';
 
+const getBaseCookieOptions = () => {
+  const isProd = process.env.NODE_ENV === 'production';
+  return {
+    httpOnly: true,
+    secure: isProd,
+    sameSite: isProd ? 'none' : 'lax',
+  };
+};
+
 const getCookieOptions = () => ({
-  httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: 'strict',
+  ...getBaseCookieOptions(),
   maxAge: 24 * 60 * 60 * 1000, // 24 hours
 });
 
@@ -54,6 +61,11 @@ export const login = async (req, res) => {
       return res.status(401).json({ message: 'Invalid email or password.' });
     }
 
+    // Block deactivated accounts if your Staff/Subscriber schema tracks active status
+    if (account.isActive === false) {
+      return res.status(403).json({ message: 'Account is deactivated. Contact your administrator.' });
+    }
+
     const role = userType === 'Staff' ? account.role : 'Subscriber';
 
     const token = jwt.sign(
@@ -67,23 +79,27 @@ export const login = async (req, res) => {
       { expiresIn: process.env.JWT_EXPIRES_IN || '24h' }
     );
 
-    res.cookie('token', token, getCookieOptions());
+    const org = await Organization.findById(account.orgId);
 
-    // Record login audit entry
+    // Record login audit entry without letting a logging failure block auth or leak a cookie on 500
     const ipAddress =
       req.headers['x-forwarded-for']?.split(',')[0]?.trim() ||
       req.ip ||
       'unknown';
 
-    await LoginHistory.create({
-      orgId: account.orgId,
-      userId: account._id,
-      userType,
-      ipAddress,
-      userAgent: req.headers['user-agent'] || 'unknown',
-    });
+    try {
+      await LoginHistory.create({
+        orgId: account.orgId,
+        userId: account._id,
+        userType,
+        ipAddress,
+        userAgent: req.headers['user-agent'] || 'unknown',
+      });
+    } catch (auditError) {
+      console.error('LoginHistory audit error:', auditError);
+    }
 
-    const org = await Organization.findById(account.orgId);
+    res.cookie('token', token, getCookieOptions());
 
     const userPayload = {
       id: account._id,
@@ -112,7 +128,7 @@ export const login = async (req, res) => {
 // GET /api/auth/me
 export const getMe = async (req, res) => {
   try {
-    const { id, orgId, userType, role } = req.user;
+    const { id, orgId, userType } = req.user;
 
     const account =
       userType === 'Staff'
@@ -125,7 +141,13 @@ export const getMe = async (req, res) => {
       return res.status(404).json({ message: 'Account not found.' });
     }
 
+    if (account.isActive === false) {
+      res.clearCookie('token', getBaseCookieOptions());
+      return res.status(403).json({ message: 'Account is deactivated.' });
+    }
+
     const org = await Organization.findById(orgId);
+    const currentRole = userType === 'Staff' ? account.role : 'Subscriber';
 
     const userPayload = {
       id: account._id,
@@ -133,7 +155,7 @@ export const getMe = async (req, res) => {
       email: account.email,
       firstName: account.firstName,
       lastName: account.lastName,
-      role,
+      role: currentRole,
       userType,
       ...(userType === 'Subscriber' && {
         plan: account.planId,
@@ -153,11 +175,6 @@ export const getMe = async (req, res) => {
 
 // POST /api/auth/logout
 export const logout = (req, res) => {
-  res.clearCookie('token', {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
-  });
-
+  res.clearCookie('token', getBaseCookieOptions());
   return res.status(200).json({ message: 'Logged out successfully.' });
 };
