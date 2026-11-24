@@ -8,13 +8,13 @@ import connectDB from './config/db.js';
 
 // Uncomment each route as you build it out:
 import authRoutes from './routes/authRoutes.js';
-// import orgRoutes from './routes/orgRoutes.js';
-// import planRoutes from './routes/planRoutes.js';
-// import staffRoutes from './routes/staffRoutes.js';
-// import subscriberRoutes from './routes/subscriberRoutes.js';
-// import subscriptionRoutes from './routes/subscriptionRoutes.js';
-// import invoiceRoutes from './routes/invoiceRoutes.js';
-// import notificationRoutes from './routes/notificationRoutes.js';
+import orgRoutes from './routes/orgRoutes.js';
+import planRoutes from './routes/planRoutes.js';
+import staffRoutes from './routes/staffRoutes.js';
+import subscriberRoutes from './routes/subscriberRoutes.js';
+import subscriptionRoutes from './routes/subscriptionRoutes.js';
+import invoiceRoutes from './routes/invoiceRoutes.js';
+import notificationRoutes from './routes/notificationRoutes.js';
 
 dotenv.config();
 
@@ -64,13 +64,13 @@ app.get('/api/health', (req, res) => {
 
 // 4. API Routes (uncomment as you implement each module)
 app.use('/api/auth', authRoutes);
-// app.use('/api/orgs', orgRoutes);
-// app.use('/api/plans', planRoutes);
-// app.use('/api/staff', staffRoutes);
-// app.use('/api/subscribers', subscriberRoutes);
-// app.use('/api/subscriptions', subscriptionRoutes);
-// app.use('/api/invoices', invoiceRoutes);
-// app.use('/api/notifications', notificationRoutes);
+app.use('/api/orgs', orgRoutes);
+app.use('/api/plans', planRoutes);
+app.use('/api/staff', staffRoutes);
+app.use('/api/subscribers', subscriberRoutes);
+app.use('/api/subscriptions', subscriptionRoutes);
+app.use('/api/invoices', invoiceRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 // 5. Connect to MongoDB, then start server
 const startServer = async () => {
