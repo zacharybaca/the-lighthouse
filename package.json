@@ -1,0 +1,27 @@
+{
+  "name": "the-lighthouse-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev:client": "npm run dev --prefix client",
+    "dev:server": "npm run dev --prefix server",
+    "dev": "concurrently -n \"CLIENT,SERVER\" -c \"cyan,magenta\" \"npm run dev:client\" \"npm run dev:server\"",
+
+    "install:client": "npm install --prefix client",
+    "install:server": "npm install --prefix server",
+    "install:all": "npm run install:client && npm run install:server",
+
+    "build:client": "npm run build --prefix client",
+    "build": "npm run install:all && npm run build:client",
+    "start": "npm start --prefix server",
+
+    "clean:client": "node -e \"require('fs').rmSync('client/node_modules', { recursive: true, force: true })\"",
+    "clean:server": "node -e \"require('fs').rmSync('server/node_modules', { recursive: true, force: true })\"",
+    "clean:all": "npm run clean:client && npm run clean:server",
+
+    "reinstall:all": "npm run clean:all && npm run install:all"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}
