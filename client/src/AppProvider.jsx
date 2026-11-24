@@ -1,5 +1,5 @@
-import { FetcherProvider } from './Fetcher/FetcherProvider';
-import { AuthProvider } from './Auth/AuthProvider';
+import { FetcherProvider } from './contexts/Fetcher/FetcherProvider.jsx';
+import { AuthProvider } from './contexts/Auth/AuthProvider.jsx';
 
 
 export const AppProvider = ({ children }) => {
