@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import Organization from '../models/Organization.js';
 import Staff from '../models/Staff.js';
 import Plan from '../models/Plan.js';
-import NetworkStatus from '../models/NetworkStatus.js';
+// import NetworkStatus from '../models/NetworkStatus.js';
 
 const getCookieOptions = () => {
   const isProd = process.env.NODE_ENV === 'production';
@@ -180,8 +180,9 @@ export const updateBranding = async (req, res) => {
 // GET /api/orgs/network-status (All Auth)
 export const getNetworkStatus = async (req, res) => {
   try {
-    const statuses = await NetworkStatus.find({ orgId: req.user.orgId }).sort({ updatedAt: -1 });
-    return res.status(200).json({ statuses });
+    // const statuses = await NetworkStatus.find({ orgId: req.user.orgId }).sort({ updatedAt: -1 });
+    // return res.status(200).json({ statuses });
+    return res.status(200).json({ message: 'Network status functionality is currently disabled.' });
   } catch (error) {
     console.error('Get network status error:', error);
     return res.status(500).json({ message: 'Server error retrieving network status.' });
@@ -197,13 +198,13 @@ export const updateNetworkStatus = async (req, res) => {
       return res.status(400).json({ message: 'Status must be operational, degraded, or outage.' });
     }
 
-    const updated = await NetworkStatus.findOneAndUpdate(
-      { orgId: req.user.orgId, region: region.trim() },
-      { status, message: message.trim() },
-      { new: true, upsert: true, runValidators: true }
-    );
+    // const updated = await NetworkStatus.findOneAndUpdate(
+    //   { orgId: req.user.orgId, region: region.trim() },
+    //   { status, message: message.trim() },
+    //   { new: true, upsert: true, runValidators: true }
+    // );
 
-    return res.status(200).json({ networkStatus: updated });
+    return res.status(200).json({ message: 'Network status functionality is currently disabled.' });
   } catch (error) {
     console.error('Update network status error:', error);
     return res.status(500).json({ message: 'Server error updating network status.' });
